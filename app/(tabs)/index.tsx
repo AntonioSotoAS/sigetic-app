@@ -1,98 +1,155 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
-
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
+import { router } from 'expo-router';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { useAuth } from '../src/shared/hooks/useAuth';
 
 export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+  const { user, logout } = useAuth();
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+  const handleLogout = async () => {
+    try {
+      await logout();
+      router.replace('/(auth)/login');
+    } catch (error) {
+      console.error('Error durante logout:', error);
+    }
+  };
+
+  return (
+    <ScrollView className="flex-1 bg-gray-50">
+      {/* Header con gradiente */}
+      <LinearGradient
+        colors={['#9D0C11', '#B91C1C']}
+        className="px-6 pt-16 pb-8"
+      >
+        <View className="flex-row items-center justify-between mb-6">
+          <View className="flex-1">
+            <Text className="text-3xl font-bold text-white mb-2">
+              ¡Hola, {user?.name || 'Usuario'}!
+            </Text>
+            <Text className="text-gray-200 text-base">Sistema de Tickets SIGETIC</Text>
+          </View>
+          <View className="w-16 h-16 bg-white/20 rounded-full items-center justify-center">
+            <Ionicons name="ticket" size={32} color="white" />
+          </View>
+        </View>
+      </LinearGradient>
+
+      {/* Cards principales */}
+      <View className="px-6 -mt-4 pb-6">
+        {/* Card 1: Crear Ticket */}
+        <View className="bg-white rounded-2xl p-6 mb-4 shadow-lg border border-gray-100">
+          <View className="flex-row items-start mb-4">
+            <View className="w-12 h-12 bg-green-500 rounded-xl items-center justify-center mr-4">
+              <Ionicons name="ticket" size={24} color="white" />
+            </View>
+            <View className="flex-1">
+              <Text className="text-xl font-bold text-gray-900 mb-1">Crear Ticket</Text>
+              <Text className="text-gray-600 text-sm">Crear un nuevo ticket de soporte</Text>
+            </View>
+          </View>
+          <TouchableOpacity 
+            className="bg-red-600 rounded-xl p-4 flex-row items-center justify-center"
+            onPress={() => alert('Función de crear ticket próximamente')}
+          >
+            <Text className="text-white font-semibold mr-2">Acceder</Text>
+            <Ionicons name="ticket" size={16} color="white" />
+          </TouchableOpacity>
+        </View>
+
+        {/* Card 2: Mis Tickets */}
+        <View className="bg-white rounded-2xl p-6 mb-4 shadow-lg border border-gray-100">
+          <View className="flex-row items-start mb-4">
+            <View className="w-12 h-12 bg-orange-500 rounded-xl items-center justify-center mr-4">
+              <Ionicons name="ticket" size={24} color="white" />
+            </View>
+            <View className="flex-1">
+              <Text className="text-xl font-bold text-gray-900 mb-1">Mis Tickets</Text>
+              <Text className="text-gray-600 text-sm">Ver tickets que he creado</Text>
+            </View>
+          </View>
+          <TouchableOpacity 
+            className="bg-red-600 rounded-xl p-4 flex-row items-center justify-center"
+            onPress={() => alert('Función de mis tickets próximamente')}
+          >
+            <Text className="text-white font-semibold mr-2">Acceder</Text>
+            <Ionicons name="ticket" size={16} color="white" />
+          </TouchableOpacity>
+        </View>
+
+        {/* Card 3: Tickets sin Asignar */}
+        <View className="bg-white rounded-2xl p-6 mb-4 shadow-lg border border-gray-100">
+          <View className="flex-row items-start mb-4">
+            <View className="w-12 h-12 bg-red-500 rounded-xl items-center justify-center mr-4">
+              <Ionicons name="people" size={24} color="white" />
+            </View>
+            <View className="flex-1">
+              <Text className="text-xl font-bold text-gray-900 mb-1">Tickets sin Asignar</Text>
+              <Text className="text-gray-600 text-sm">Tickets pendientes de asignación</Text>
+            </View>
+          </View>
+          <TouchableOpacity 
+            className="bg-red-600 rounded-xl p-4 flex-row items-center justify-center"
+            onPress={() => alert('Función de tickets sin asignar próximamente')}
+          >
+            <Text className="text-white font-semibold mr-2">Acceder</Text>
+            <Ionicons name="people" size={16} color="white" />
+          </TouchableOpacity>
+        </View>
+
+        {/* Card 4: Mis Tickets Asignados */}
+        <View className="bg-white rounded-2xl p-6 mb-4 shadow-lg border border-gray-100">
+          <View className="flex-row items-start mb-4">
+            <View className="w-12 h-12 bg-purple-500 rounded-xl items-center justify-center mr-4">
+              <Ionicons name="person" size={24} color="white" />
+            </View>
+            <View className="flex-1">
+              <Text className="text-xl font-bold text-gray-900 mb-1">Mis Tickets Asignados</Text>
+              <Text className="text-gray-600 text-sm">Tickets asignados a mí</Text>
+            </View>
+          </View>
+          <TouchableOpacity 
+            className="bg-red-600 rounded-xl p-4 flex-row items-center justify-center"
+            onPress={() => alert('Función de tickets asignados próximamente')}
+          >
+            <Text className="text-white font-semibold mr-2">Acceder</Text>
+            <Ionicons name="person" size={16} color="white" />
+          </TouchableOpacity>
+        </View>
+
+        {/* Card 5: Configuración */}
+        <View className="bg-white rounded-2xl p-6 mb-6 shadow-lg border border-gray-100">
+          <View className="flex-row items-start mb-4">
+            <View className="w-12 h-12 bg-gray-500 rounded-xl items-center justify-center mr-4">
+              <Ionicons name="settings" size={24} color="white" />
+            </View>
+            <View className="flex-1">
+              <Text className="text-xl font-bold text-gray-900 mb-1">Configuración</Text>
+              <Text className="text-gray-600 text-sm">Ajustes y preferencias del sistema</Text>
+            </View>
+          </View>
+          <TouchableOpacity 
+            className="bg-red-600 rounded-xl p-4 flex-row items-center justify-center"
+            onPress={() => alert('Función de configuración próximamente')}
+          >
+            <Text className="text-white font-semibold mr-2">Acceder</Text>
+            <Ionicons name="settings" size={16} color="white" />
+          </TouchableOpacity>
+        </View>
+
+        {/* Botón de Logout */}
+        <TouchableOpacity
+          onPress={handleLogout}
+          className="bg-gray-500 rounded-xl p-4 items-center"
+        >
+          <View className="flex-row items-center">
+            <Ionicons name="log-out-outline" size={20} color="white" />
+            <Text className="text-white font-semibold ml-2">Cerrar Sesión</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   );
 }
 
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});

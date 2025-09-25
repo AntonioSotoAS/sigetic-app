@@ -1,112 +1,210 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
-
-import { Collapsible } from '@/components/ui/collapsible';
-import { ExternalLink } from '@/components/external-link';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Fonts } from '@/constants/theme';
+import { ModernButton } from '@/components/ui/modern-button';
+import { ModernCard } from '@/components/ui/modern-card';
+import { StatsCard } from '@/components/ui/stats-card';
+import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
 export default function TabTwoScreen() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
-      headerImage={
-        <IconSymbol
-          size={310}
-          color="#808080"
-          name="chevron.left.forwardslash.chevron.right"
-          style={styles.headerImage}
+    <ScrollView className="flex-1 bg-gray-50 dark:bg-gray-900">
+      {/* Header con gradiente */}
+      <LinearGradient
+        colors={['#667eea', '#764ba2']}
+        className="px-6 pt-16 pb-8"
+      >
+        <View className="flex-row items-center justify-between">
+          <View>
+            <Text className="text-3xl font-bold text-white mb-2">Explorar</Text>
+            <Text className="text-gray-200 text-base">Descubre nuevas funcionalidades</Text>
+          </View>
+          <View className="w-16 h-16 bg-white/20 rounded-full items-center justify-center">
+            <Ionicons name="compass-outline" size={32} color="white" />
+          </View>
+        </View>
+      </LinearGradient>
+
+      {/* Cards modernas */}
+      <View className="px-6 -mt-4">
+        {/* Card principal */}
+        <View className="bg-white dark:bg-gray-800 rounded-2xl p-6 mb-6 shadow-lg">
+          <View className="flex-row items-center mb-4">
+            <View className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl items-center justify-center mr-4">
+              <Ionicons name="code-slash" size={24} color="#3b82f6" />
+            </View>
+            <View className="flex-1">
+              <Text className="text-lg font-semibold text-gray-900 dark:text-white">Desarrollo</Text>
+              <Text className="text-gray-600 dark:text-gray-400">Herramientas y recursos</Text>
+            </View>
+          </View>
+          <Text className="text-gray-700 dark:text-gray-300 leading-6">
+            Esta aplicación incluye código de ejemplo para ayudarte a comenzar con el desarrollo.
+          </Text>
+        </View>
+
+        {/* Grid de características */}
+        <View className="flex-row flex-wrap -mx-2 mb-6">
+          <View className="w-1/2 px-2 mb-4">
+            <TouchableOpacity className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-md">
+              <View className="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-lg items-center justify-center mb-3">
+                <Ionicons name="folder-outline" size={20} color="#10b981" />
+              </View>
+              <Text className="font-semibold text-gray-900 dark:text-white mb-1">Rutas</Text>
+              <Text className="text-xs text-gray-600 dark:text-gray-400">Navegación basada en archivos</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View className="w-1/2 px-2 mb-4">
+            <TouchableOpacity className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-md">
+              <View className="w-10 h-10 bg-purple-100 dark:bg-purple-900/30 rounded-lg items-center justify-center mb-3">
+                <Ionicons name="phone-portrait-outline" size={20} color="#8b5cf6" />
+              </View>
+              <Text className="font-semibold text-gray-900 dark:text-white mb-1">Multiplataforma</Text>
+              <Text className="text-xs text-gray-600 dark:text-gray-400">Android, iOS y Web</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View className="w-1/2 px-2 mb-4">
+            <TouchableOpacity className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-md">
+              <View className="w-10 h-10 bg-orange-100 dark:bg-orange-900/30 rounded-lg items-center justify-center mb-3">
+                <Ionicons name="image-outline" size={20} color="#f59e0b" />
+              </View>
+              <Text className="font-semibold text-gray-900 dark:text-white mb-1">Imágenes</Text>
+              <Text className="text-xs text-gray-600 dark:text-gray-400">Optimización automática</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View className="w-1/2 px-2 mb-4">
+            <TouchableOpacity className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-md">
+              <View className="w-10 h-10 bg-pink-100 dark:bg-pink-900/30 rounded-lg items-center justify-center mb-3">
+                <Ionicons name="moon-outline" size={20} color="#ec4899" />
+              </View>
+              <Text className="font-semibold text-gray-900 dark:text-white mb-1">Temas</Text>
+              <Text className="text-xs text-gray-600 dark:text-gray-400">Modo claro y oscuro</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        {/* Sección de animaciones */}
+        <View className="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl p-6 mb-6">
+          <View className="flex-row items-center mb-4">
+            <View className="w-12 h-12 bg-white/20 rounded-xl items-center justify-center mr-4">
+              <Ionicons name="play-circle-outline" size={24} color="white" />
+            </View>
+            <View className="flex-1">
+              <Text className="text-lg font-semibold text-white">Animaciones</Text>
+              <Text className="text-indigo-100">Componentes interactivos</Text>
+            </View>
+          </View>
+          <Text className="text-white/90 leading-6 mb-4">
+            Este template incluye ejemplos de componentes animados usando{' '}
+            <Text className="font-mono bg-white/20 px-2 py-1 rounded">react-native-reanimated</Text>
+          </Text>
+          {Platform.select({
+            ios: (
+              <Text className="text-white/80 text-sm">
+                El componente ParallaxScrollView proporciona un efecto parallax para la imagen del header.
+              </Text>
+            ),
+          })}
+        </View>
+
+        {/* Footer con información adicional */}
+        <ModernCard
+          title="Información"
+          subtitle="Acerca de esta aplicación"
+          description="Esta aplicación demuestra el uso de Tailwind CSS con NativeWind para crear interfaces modernas y responsivas."
+          icon="information-circle-outline"
+          iconColor="#6b7280"
         />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText
-          type="title"
-          style={{
-            fontFamily: Fonts.rounded,
-          }}>
-          Explore
-        </ThemedText>
-      </ThemedView>
-      <ThemedText>This app includes example code to help you get started.</ThemedText>
-      <Collapsible title="File-based routing">
-        <ThemedText>
-          This app has two screens:{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
-        </ThemedText>
-        <ThemedText>
-          The layout file in <ThemedText type="defaultSemiBold">app/(tabs)/_layout.tsx</ThemedText>{' '}
-          sets up the tab navigator.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/router/introduction">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Android, iOS, and web support">
-        <ThemedText>
-          You can open this project on Android, iOS, and the web. To open the web version, press{' '}
-          <ThemedText type="defaultSemiBold">w</ThemedText> in the terminal running this project.
-        </ThemedText>
-      </Collapsible>
-      <Collapsible title="Images">
-        <ThemedText>
-          For static images, you can use the <ThemedText type="defaultSemiBold">@2x</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">@3x</ThemedText> suffixes to provide files for
-          different screen densities
-        </ThemedText>
-        <Image
-          source={require('@/assets/images/react-logo.png')}
-          style={{ width: 100, height: 100, alignSelf: 'center' }}
-        />
-        <ExternalLink href="https://reactnative.dev/docs/images">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Light and dark mode components">
-        <ThemedText>
-          This template has light and dark mode support. The{' '}
-          <ThemedText type="defaultSemiBold">useColorScheme()</ThemedText> hook lets you inspect
-          what the user&apos;s current color scheme is, and so you can adjust UI colors accordingly.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Animations">
-        <ThemedText>
-          This template includes an example of an animated component. The{' '}
-          <ThemedText type="defaultSemiBold">components/HelloWave.tsx</ThemedText> component uses
-          the powerful{' '}
-          <ThemedText type="defaultSemiBold" style={{ fontFamily: Fonts.mono }}>
-            react-native-reanimated
-          </ThemedText>{' '}
-          library to create a waving hand animation.
-        </ThemedText>
-        {Platform.select({
-          ios: (
-            <ThemedText>
-              The <ThemedText type="defaultSemiBold">components/ParallaxScrollView.tsx</ThemedText>{' '}
-              component provides a parallax effect for the header image.
-            </ThemedText>
-          ),
-        })}
-      </Collapsible>
-    </ParallaxScrollView>
+
+        {/* Estadísticas */}
+        <View className="mb-6">
+          <Text className="text-xl font-bold text-gray-900 dark:text-white mb-4">Estadísticas de la aplicación</Text>
+          <View className="flex-row flex-wrap -mx-2">
+            <View className="w-1/2 px-2 mb-4">
+              <StatsCard
+                title="Usuarios activos"
+                value="1,234"
+                subtitle="Este mes"
+                icon="people"
+                iconColor="#10b981"
+                trend="up"
+                trendValue="+12%"
+              />
+            </View>
+            <View className="w-1/2 px-2 mb-4">
+              <StatsCard
+                title="Descargas"
+                value="5,678"
+                subtitle="Total"
+                icon="download"
+                iconColor="#3b82f6"
+                trend="up"
+                trendValue="+8%"
+              />
+            </View>
+            <View className="w-1/2 px-2 mb-4">
+              <StatsCard
+                title="Calificación"
+                value="4.8"
+                subtitle="de 5 estrellas"
+                icon="star"
+                iconColor="#f59e0b"
+                trend="up"
+                trendValue="+0.2"
+              />
+            </View>
+            <View className="w-1/2 px-2 mb-4">
+              <StatsCard
+                title="Tiempo de uso"
+                value="2.5h"
+                subtitle="Promedio diario"
+                icon="time"
+                iconColor="#8b5cf6"
+                trend="neutral"
+                trendValue="0%"
+              />
+            </View>
+          </View>
+        </View>
+
+        {/* Botones de demostración */}
+        <View className="space-y-4 mb-6">
+          <Text className="text-xl font-bold text-gray-900 dark:text-white mb-4">Botones de demostración</Text>
+          
+          <View className="space-y-3">
+            <ModernButton
+              title="Botón Primario"
+              onPress={() => alert('Botón primario presionado')}
+              variant="primary"
+              icon="checkmark-circle"
+            />
+            
+            <ModernButton
+              title="Botón con Gradiente"
+              onPress={() => alert('Botón con gradiente presionado')}
+              variant="gradient"
+              icon="star"
+            />
+            
+            <ModernButton
+              title="Botón Secundario"
+              onPress={() => alert('Botón secundario presionado')}
+              variant="secondary"
+              icon="settings"
+            />
+            
+            <ModernButton
+              title="Botón Outline"
+              onPress={() => alert('Botón outline presionado')}
+              variant="outline"
+              icon="arrow-forward"
+            />
+          </View>
+        </View>
+      </View>
+    </ScrollView>
   );
 }
 
-const styles = StyleSheet.create({
-  headerImage: {
-    color: '#808080',
-    bottom: -90,
-    left: -35,
-    position: 'absolute',
-  },
-  titleContainer: {
-    flexDirection: 'row',
-    gap: 8,
-  },
-});
